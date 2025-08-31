@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>davinganteng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+   
+</head>
+<body>
+    <div class="container">
+        <div class="typing-container">
+            <div id="typing-text"></div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="startBtn">
+                <i class="fas fa-play"></i> pencetbebek
+            </button>
+            <button class="btn" id="repeatBtn">
+                <i class="fas fa-redo"></i> yang ini jangan di pencet🤭!!
+            </button>
+        </div>
+        
+        <div class="footer">
+            <p> zalfaa bauu belum mandi <i class="fas fa-melet" style="color: #ff69b4;">😜</i> </p>
+        </div>
+    </div>
+    
+    
+    <div class="modal" id="imageModal">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <div class="images-container">
+            <div class="image-wrapper">
+                <div class="loading" id="imageLoading1">Memuat gambar 1...</div>
+                <img class="modal-image" id="modalImage1" style="display: none;" alt="Foto pertama">
+            </div>
+            <div class="image-wrapper">
+                <div class="loading" id="imageLoading2">Memuat gambar 2...</div>
+                <img class="modal-image" id="modalImage2" style="display: none;" alt="Foto kedua">
+            </div>
+        </div>
+        <div class="image-caption">udah dibilang jangan di pencet cillll🤪</div>
+    </div>
+    
+    <div class="falling-hearts" id="heartsContainer"></div>
+
+    <script>
+        const messages = [
+            "haiiiii sayanggggg...",
+            "aku cuma mau bilang...",
+            "iloveyouuu banyabanyaaaa!!!",
+            "hehe uda gitu doang🤪...",
+            "guilakkk kece bangett gwehh 😎😏",
+            "sorry yaa emang aku sekeren ini wkwkwk 😜",
+        ];
+        
+        let messageIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let isWaiting = false;
+        let typingInterval;
+        
+        const typingTextElem = document.getElementById('typing-text');
+        const startBtn = document.getElementById('startBtn');
+        const repeatBtn = document.getElementById('repeatBtn');
+        const imageModal = document.getElementById('imageModal');
+        const modalImage1 = document.getElementById('modalImage1');
+        const modalImage2 = document.getElementById('modalImage2');
+        const closeModal = document.getElementById('closeModal');
+        const imageLoading1 = document.getElementById('imageLoading1');
+        const imageLoading2 = document.getElementById('imageLoading2');
+        
+        const imageUrls = [
+            "https://i.postimg.cc/wjQB8kS0/Screenshot-2025-08-24-182015.png", 
+            "https://i.postimg.cc/W18J6jbN/Whats-App-Image-2025-08-23-at-19-12-58.jpg"  
+        ];
+        
+        function typeEffect() {
+            const currentMessage = messages[messageIndex];
+            
+            if (!isDeleting && charIndex < currentMessage.length) {
+                typingTextElem.innerHTML = currentMessage.substring(0, charIndex + 1) + '<span class="cursor"></span>';
+                charIndex++;
+                setTimeout(typeEffect, 100);
+            } else if (isDeleting && charIndex > 0) {
+                typingTextElem.innerHTML = currentMessage.substring(0, charIndex - 1) + '<span class="cursor"></span>';
+                charIndex--;
+                setTimeout(typeEffect, 50);
+            } else {
+                isDeleting = !isDeleting;
+                
+                if (!isDeleting) {
+                    messageIndex = (messageIndex + 1) % messages.length;
+                }
+                
+                isWaiting = true;
+                setTimeout(typeEffect, 1000);
+            }
+        }
+        
+        function startTyping() {
+            if (typingInterval) {
+                clearInterval(typingInterval);
+            }
+            
+            messageIndex = 0;
+            charIndex = 0;
+            isDeleting = false;
+            isWaiting = false;
+            
+            startBtn.disabled = true;
+            startBtn.innerHTML = '<i class="fas fa-play"></i> Sedang Berjalan';
+            
+            typeEffect();
+            createHearts();
+        }
+        
+        function repeatTyping() {
+            if (typingInterval) {
+                clearInterval(typingInterval);
+            }
+            
+            messageIndex = 0;
+            charIndex = 0;
+            isDeleting = false;
+            isWaiting = false;
+            
+            typeEffect();
+        }
+        
+        function loadImage(imgElement, loadingElement, imageUrl, fallbackUrl) {
+            const img = new Image();
+            img.onload = function() {
+                imgElement.src = imageUrl;
+                imgElement.style.display = 'block';
+                loadingElement.style.display = 'none';
+            };
+            img.onerror = function() {
+                loadingElement.innerHTML = 'Menggunakan gambar cadangan...';
+                imgElement.src = fallbackUrl;
+                imgElement.style.display = 'block';
+                loadingElement.style.display = 'none';
+            };
+            img.src = imageUrl;
+        }
+        
+        function showImage() {
+            imageModal.classList.add('show');
+            imageLoading1.style.display = 'flex';
+            imageLoading2.style.display = 'flex';
+            modalImage1.style.display = 'none';
+            modalImage2.style.display = 'none';
+
+            const fallbackUrl = "https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=80";
+            
+            loadImage(modalImage1, imageLoading1, imageUrls[0], fallbackUrl);
+            
+            loadImage(modalImage2, imageLoading2, imageUrls[1], fallbackUrl);
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+        }
+        
+        function closeImageModal() {
+            imageModal.classList.remove('show');
+        }
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            const size = Math.random() * 25 + 15;
+            heart.style.fontSize = size + 'px';
+            
+            const duration = Math.random() * 3 + 3;
+            heart.style.animationDuration = duration + 's';
+            
+            document.getElementById('heartsContainer').appendChild(heart);
+            
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, duration * 1000);
+        }
+        
+        function createHearts() {
+            const heartsContainer = document.getElementById('heartsContainer');
+            heartsContainer.innerHTML = '';
+            
+            typingInterval = setInterval(createHeart, 300);
+        }
+        
+        startBtn.addEventListener('click', startTyping);
+        repeatBtn.addEventListener('click', showImage);
+        closeModal.addEventListener('click', closeImageModal);
+        
+        imageModal.addEventListener('click', function(e) {
+            if (e.target === imageModal) {
+                closeImageModal();
+            }
+        });
+        
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createHeart, i * 300);
+        }
+        
+        window.addEventListener('orientationchange', function() {
+            setTimeout(function() {
+                window.location.reload();
+            }, 500);
+        });
+        
+        window.addEventListener('load', function() {
+            const preloadImg1 = new Image();
+            preloadImg1.src = imageUrls[0];
+            
+            const preloadImg2 = new Image();
+            preloadImg2.src = imageUrls[1];
+        });
+    </script>
+</body>
+</html>
