@@ -1,3 +1,4 @@
+ 
         * {
             margin: 0;
             padding: 0;
@@ -17,7 +18,7 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 600px;
             width: 100%;
             text-align: center;
             z-index: 20;
@@ -282,50 +283,4 @@
                 font-size: 1rem;
             }
         }
-        
-        /* Special styles for very small devices */
-        @media (max-height: 600px) {
-            .container {
-                transform: scale(0.9);
-            }
-            
-            .typing-container {
-                margin-bottom: 20px;
-            }
-            
-            .footer {
-                margin-top: 20px;
-            }
-        }
-        
-        /* Orientation specific styles */
-        @media (orientation: landscape) and (max-height: 500px) {
-            .container {
-                transform: scale(0.8);
-            }
-            
-            .typing-container {
-                padding: 15px;
-                margin-bottom: 15px;
-            }
-            
-            #typing-text {
-                min-height: 80px;
-                font-size: 1.1rem;
-            }
-            
-            .images-container {
-                flex-direction: row;
-                gap: 15px;
-            }
-            
-            .image-wrapper {
-                width: auto;
-                height: 90%;
-            }
-            
-            .modal-image {
-                width: auto;
-                height: 100%;
-            }
-        }
+    

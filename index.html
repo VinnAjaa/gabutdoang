@@ -24,10 +24,9 @@
         </div>
         
         <div class="footer">
-            <p> zalfaa bauu belum mandi <i class="fas fa-melet" style="color: #ff69b4;">😜</i> </p>
+            <p> zalfaa bauu belum mandi <i class="fas fa-heart" style="color: #ff69b4;"></i> </p>
         </div>
     </div>
-    
     
     <div class="modal" id="imageModal">
         <span class="close-btn" id="closeModal">&times;</span>
@@ -72,9 +71,10 @@
         const imageLoading1 = document.getElementById('imageLoading1');
         const imageLoading2 = document.getElementById('imageLoading2');
         
+       
         const imageUrls = [
-            "https://i.postimg.cc/wjQB8kS0/Screenshot-2025-08-24-182015.png", 
-            "https://i.postimg.cc/W18J6jbN/Whats-App-Image-2025-08-23-at-19-12-58.jpg"  
+            "img/foto1.png",
+            "img/foto2.png"  
         ];
         
         function typeEffect() {
@@ -130,7 +130,7 @@
             typeEffect();
         }
         
-        function loadImage(imgElement, loadingElement, imageUrl, fallbackUrl) {
+        function loadImage(imgElement, loadingElement, imageUrl) {
             const img = new Image();
             img.onload = function() {
                 imgElement.src = imageUrl;
@@ -138,9 +138,8 @@
                 loadingElement.style.display = 'none';
             };
             img.onerror = function() {
-                loadingElement.innerHTML = 'Menggunakan gambar cadangan...';
-                imgElement.src = fallbackUrl;
-                imgElement.style.display = 'block';
+                loadingElement.innerHTML = 'Gambar tidak ditemukan';
+                
                 loadingElement.style.display = 'none';
             };
             img.src = imageUrl;
@@ -152,12 +151,10 @@
             imageLoading2.style.display = 'flex';
             modalImage1.style.display = 'none';
             modalImage2.style.display = 'none';
-
-            const fallbackUrl = "https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=900&q=80";
             
-            loadImage(modalImage1, imageLoading1, imageUrls[0], fallbackUrl);
-            
-            loadImage(modalImage2, imageLoading2, imageUrls[1], fallbackUrl);
+          
+            loadImage(modalImage1, imageLoading1, imageUrls[0]);
+            loadImage(modalImage2, imageLoading2, imageUrls[1]);
             
             for (let i = 0; i < 15; i++) {
                 setTimeout(createHeart, i * 100);
@@ -215,14 +212,6 @@
             setTimeout(function() {
                 window.location.reload();
             }, 500);
-        });
-        
-        window.addEventListener('load', function() {
-            const preloadImg1 = new Image();
-            preloadImg1.src = imageUrls[0];
-            
-            const preloadImg2 = new Image();
-            preloadImg2.src = imageUrls[1];
         });
     </script>
 </body>
