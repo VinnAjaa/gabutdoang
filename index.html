@@ -6,28 +6,30 @@
     <title>davinganteng</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-   
 </head>
 <body>
-    <div class="container">
-        <div class="typing-container">
-            <div id="typing-text"></div>
-        </div>
-        
-        <div class="controls">
-            <button class="btn" id="startBtn">
-                <i class="fas fa-play"></i> pencetbebek
-            </button>
-            <button class="btn" id="repeatBtn">
-                <i class="fas fa-redo"></i> yang ini jangan di pencet🤭!!
-            </button>
-        </div>
-        
-        <div class="footer">
-            <p> zalfaa bauu belum mandi <i class="fas  " style="color: #ff69b4;">🤪</i> </p>
+    <div class="scroll-container">
+        <div class="container">
+            <div class="typing-container">
+                <div id="typing-text"></div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn" id="startBtn">
+                    <i class="fas fa-play"></i> pencetbebek
+                </button>
+                <button class="btn" id="repeatBtn">
+                    <i class="fas fa-redo"></i> yang ini jangan di pencet🤭!!
+                </button>
+            </div>
+            
+            <div class="footer">
+                <p> zalfaa bauu belum mandi <span style="color: #ff69b4;">🤪</span> </p>
+            </div>
         </div>
     </div>
     
+    <!-- Modal untuk gambar -->
     <div class="modal" id="imageModal">
         <span class="close-btn" id="closeModal">&times;</span>
         <div class="images-container">
@@ -40,7 +42,7 @@
                 <img class="modal-image" id="modalImage2" style="display: none;" alt="Foto kedua">
             </div>
         </div>
-        <div class="image-caption">udah dibilang jangan di pencet cillll🤪</div>
+        <div class="image-caption">udah dibilang jangan di pencet cillll🤪 ada anomali</div>
     </div>
     
     <div class="falling-hearts" id="heartsContainer"></div>
@@ -49,6 +51,8 @@
         const messages = [
             "haiiiii sayanggggg...",
             "aku cuma mau bilang...",
+            "maaf yaa aku akhir akhir ini sering buat sayang kesel",
+            "tapi aku janji deh aku bakal berubah jadi lebih baik lagi buat sayang...",
             "iloveyouuu banyabanyaaaa!!!",
             "hehe uda gitu doang🤪...",
             "guilakkk kece bangett gwehh 😎😏",
@@ -71,7 +75,6 @@
         const imageLoading1 = document.getElementById('imageLoading1');
         const imageLoading2 = document.getElementById('imageLoading2');
         
-       
         const imageUrls = [
             "img/foto1.png",
             "img/foto2.png"  
@@ -139,7 +142,6 @@
             };
             img.onerror = function() {
                 loadingElement.innerHTML = 'Gambar tidak ditemukan';
-                
                 loadingElement.style.display = 'none';
             };
             img.src = imageUrl;
@@ -152,7 +154,6 @@
             modalImage1.style.display = 'none';
             modalImage2.style.display = 'none';
             
-          
             loadImage(modalImage1, imageLoading1, imageUrls[0]);
             loadImage(modalImage2, imageLoading2, imageUrls[1]);
             
